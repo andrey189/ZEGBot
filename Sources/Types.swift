@@ -28,40 +28,40 @@ public struct Update: Codable {
 
 public class Message: Codable {
 
-	public let messageId: Int
-	public let date: Int
-	public let chat: Chat
+	public let messageId: Int = -1
+	public let date: Int = -1
+	public let chat: Chat? = nil
 
 	/* Optional. */
-	public let from: User?
-	public let forwardFrom: User?
-	public let forwardFromChat: Chat?
-	public let forwardDate: Int?
-	public let replyToMessage: Message?
-	public let editDate: Int?
-	public let text: String?
-	public let entities: [MessageEntity]?
-	public let audio: Audio?
-	public let document: Document?
-	public let photo: [PhotoSize]?
-	public let sticker: Sticker?
-	public let video: Video?
-	public let voice: Voice?
-	public let caption: String?
-	public let contact: Contact?
-	public let location: Location?
-	public let venue: Venue?
-	public let newChatMember: User?
-	public let leftChatMember: User?
-	public let newChatTitle: String?
-	public let newChatPhoto: [PhotoSize]?
-	public let deleteChatPhoto: Bool?
-	public let groupChatCreated: Bool?
-	public let supergroupChatCreated: Bool?
-	public let channelChatCreated: Bool?
-	public let migrateToChatId: Int?
-	public let migrateFromChatId: Int?
-	public let pinnedMessage: Message?
+	public let from: User?  = nil
+	public let forwardFrom: User? = nil
+	public let forwardFromChat: Chat? = nil
+	public let forwardDate: Int? = nil
+	public let replyToMessage: Message? = nil
+	public let editDate: Int? = nil
+	public let text: String? = nil
+	public let entities: [MessageEntity]? = nil
+	public let audio: Audio? = nil
+	public let document: Document? = nil
+	public let photo: [PhotoSize]? = nil
+	public let sticker: Sticker? = nil
+	public let video: Video? = nil
+	public let voice: Voice? = nil
+	public let caption: String? = nil
+	public let contact: Contact? = nil
+	public let location: Location? = nil
+	public let venue: Venue? = nil
+	public let newChatMember: User? = nil
+	public let leftChatMember: User? = nil
+	public let newChatTitle: String? = nil
+	public let newChatPhoto: [PhotoSize]? = nil
+	public let deleteChatPhoto: Bool? = nil
+	public let groupChatCreated: Bool? = nil
+	public let supergroupChatCreated: Bool? = nil
+	public let channelChatCreated: Bool? = nil
+	public let migrateToChatId: Int? = nil
+	public let migrateFromChatId: Int? = nil
+	public let pinnedMessage: Message? = nil
 
 	enum CodingKeys: String, CodingKey {
 		case date, chat, from, text, entities, audio, document, photo, sticker, video, voice, caption, contact, location, venue
