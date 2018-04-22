@@ -143,7 +143,7 @@ extension Chat: Sendable {
 
 extension Message: Sendable {
 
-	public var chatId: Int { return self.chat.id }
+    public var chatId: Int { return self.chat!.id }
 	public var replyToMessageId: Int? { return messageId }
 
 }
