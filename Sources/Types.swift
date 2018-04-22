@@ -10,12 +10,12 @@
 
 public struct Update: Codable {
 
-	public let updateId: Int
+	public var updateId: Int
 
 	/* Optional. */
-	public let message: Message?
-	public let editedMessage: Message?
-	public let channelPost: Message?
+	public var message: Message?
+	public var editedMessage: Message?
+	public var channelPost: Message?
 
 	enum CodingKeys: String, CodingKey {
 		case message
@@ -28,40 +28,40 @@ public struct Update: Codable {
 
 public class Message: Codable {
 
-	public let messageId: Int
-	public let date: Int
-	public let chat: Chat
+	public var messageId: Int = -1
+	public var date: Int = -1
+	public var chat: Chat? = nil
 
 	/* Optional. */
-	public let from: User?
-	public let forwardFrom: User?
-	public let forwardFromChat: Chat?
-	public let forwardDate: Int?
-	public let replyToMessage: Message?
-	public let editDate: Int?
-	public let text: String?
-	public let entities: [MessageEntity]?
-	public let audio: Audio?
-	public let document: Document?
-	public let photo: [PhotoSize]?
-	public let sticker: Sticker?
-	public let video: Video?
-	public let voice: Voice?
-	public let caption: String?
-	public let contact: Contact?
-	public let location: Location?
-	public let venue: Venue?
-	public let newChatMember: User?
-	public let leftChatMember: User?
-	public let newChatTitle: String?
-	public let newChatPhoto: [PhotoSize]?
-	public let deleteChatPhoto: Bool?
-	public let groupChatCreated: Bool?
-	public let supergroupChatCreated: Bool?
-	public let channelChatCreated: Bool?
-	public let migrateToChatId: Int?
-	public let migrateFromChatId: Int?
-	public let pinnedMessage: Message?
+	public var from: User?  = nil
+	public var forwardFrom: User? = nil
+	public var forwardFromChat: Chat? = nil
+	public var forwardDate: Int? = nil
+	public var replyToMessage: Message? = nil
+	public var editDate: Int? = nil
+	public var text: String? = nil
+	public var entities: [MessageEntity]? = nil
+	public var audio: Audio? = nil
+	public var document: Document? = nil
+	public var photo: [PhotoSize]? = nil
+	public var sticker: Sticker? = nil
+	public var video: Video? = nil
+	public var voice: Voice? = nil
+	public var caption: String? = nil
+	public var contact: Contact? = nil
+	public var location: Location? = nil
+	public var venue: Venue? = nil
+	public var newChatMember: User? = nil
+	public var leftChatMember: User? = nil
+	public var newChatTitle: String? = nil
+	public var newChatPhoto: [PhotoSize]? = nil
+	public var deleteChatPhoto: Bool? = nil
+	public var groupChatCreated: Bool? = nil
+	public var supergroupChatCreated: Bool? = nil
+	public var channelChatCreated: Bool? = nil
+	public var migrateToChatId: Int? = nil
+	public var migrateFromChatId: Int? = nil
+	public var pinnedMessage: Message? = nil
 
 	enum CodingKeys: String, CodingKey {
 		case date, chat, from, text, entities, audio, document, photo, sticker, video, voice, caption, contact, location, venue
@@ -88,14 +88,14 @@ public class Message: Codable {
 
 public struct Chat: Codable {
 
-	public let id: Int
-	public let type: StructType
+	public var id: Int
+	public var type: StructType
 
 	/* Optional. */
-	public let title: String?
-	public let username: String?
-	public let firstName: String?
-	public let lastName: String?
+	public var title: String?
+	public var username: String?
+	public var firstName: String?
+	public var lastName: String?
 
 	public enum StructType: String, Codable {
 		case `private`, group, supergroup, channel
@@ -111,12 +111,12 @@ public struct Chat: Codable {
 
 public struct User: Codable {
 
-	public let id: Int
-	public let firstName: String
+	public var id: Int
+	public var firstName: String
 
 	/* OPTIONAL. */
-	public let lastName: String?
-	public let username: String?
+	public var lastName: String?
+	public var username: String?
 
 	enum CodingKeys: String, CodingKey {
 		case id, username
@@ -128,13 +128,13 @@ public struct User: Codable {
 
 public struct MessageEntity: Codable {
 
-	public let type: StructType
-	public let offset: Int
-	public let length: Int
+	public var type: StructType
+	public var offset: Int
+	public var length: Int
 
 	/* OPTIONAl. */
-	public let url: String?
-	public let user: User?
+	public var url: String?
+	public var user: User?
 
 	public enum StructType: String, Codable {
 		case mention, hashtag, url, email, bold, italic, code, pre
@@ -147,14 +147,14 @@ public struct MessageEntity: Codable {
 
 public struct Audio: Codable {
 
-	public let fileId: String
-	public let duration: Int
+	public var fileId: String
+	public var duration: Int
 
 	/* OPTIONAL. */
-	public let performer: String?
-	public let title: String?
-	public let mimeType: String?
-	public let fileSize: Int?
+	public var performer: String?
+	public var title: String?
+	public var mimeType: String?
+	public var fileSize: Int?
 
 	enum CodingKeys: String, CodingKey {
 		case duration, performer, title
@@ -167,13 +167,13 @@ public struct Audio: Codable {
 
 public struct Document: Codable {
 
-	public let fileId: String
+	public var fileId: String
 
 	/* OPTIONAL. */
-	public let thumb: PhotoSize?
-	public let fileName: String?
-	public let mimeType: String?
-	public let fileSize: Int?
+	public var thumb: PhotoSize?
+	public var fileName: String?
+	public var mimeType: String?
+	public var fileSize: Int?
 
 	enum CodingKeys: String, CodingKey {
 		case thumb
@@ -187,12 +187,12 @@ public struct Document: Codable {
 
 public struct PhotoSize: Codable {
 
-	public let fileId: String
-	public let width: Int
-	public let height: Int
+	public var fileId: String
+	public var width: Int
+	public var height: Int
 
 	/* Optional. */
-	public let fileSize: Int?
+	public var fileSize: Int?
 
 	enum CodingKeys: String, CodingKey {
 		case width, height
@@ -204,14 +204,14 @@ public struct PhotoSize: Codable {
 
 public struct Sticker: Codable {
 
-	public let fileId: String
-	public let width: Int
-	public let height: Int
+	public var fileId: String
+	public var width: Int
+	public var height: Int
 
 	/* Optional. */
-	public let thumb: PhotoSize?
-	public let emoji: String?
-	public let fileSize: Int?
+	public var thumb: PhotoSize?
+	public var emoji: String?
+	public var fileSize: Int?
 
 	enum CodingKeys: String, CodingKey {
 		case width, height, thumb, emoji
@@ -223,15 +223,15 @@ public struct Sticker: Codable {
 
 public struct Video: Codable {
 
-	public let fileId: String
-	public let width: Int
-	public let height: Int
-	public let duration: Int
+	public var fileId: String
+	public var width: Int
+	public var height: Int
+	public var duration: Int
 
 	/* OPTIONAL. */
-	public let thumb: PhotoSize?
-	public let mimeType: String?
-	public let fileSize: Int?
+	public var thumb: PhotoSize?
+	public var mimeType: String?
+	public var fileSize: Int?
 
 	enum CodingKeys: String, CodingKey {
 		case width, height, duration, thumb
@@ -244,12 +244,12 @@ public struct Video: Codable {
 
 public struct Voice: Codable {
 
-	public let fileId: String
-	public let duration: Int
+	public var fileId: String
+	public var duration: Int
 
 	/* Optional. */
-	public let mimeType: String?
-	public let fileSize: Int?
+	public var mimeType: String?
+	public var fileSize: Int?
 
 	enum CodingKeys: String, CodingKey {
 		case duration
@@ -262,12 +262,12 @@ public struct Voice: Codable {
 
 public struct Contact: Codable {
 
-	public let phoneNumber: String
-	public let firstName: String
+	public var phoneNumber: String
+	public var firstName: String
 
 	/* OPTIONAL. */
-	public let lastName: String?
-	public let userId: Int?
+	public var lastName: String?
+	public var userId: Int?
 
 	enum CodingKeys: String, CodingKey {
 		case phoneNumber = "phone_number"
@@ -280,19 +280,19 @@ public struct Contact: Codable {
 
 public struct Location: Codable {
 
-	public let longitude: Double
-	public let latitude: Double
+	public var longitude: Double
+	public var latitude: Double
 
 }
 
 public struct Venue: Codable {
 
-	public let location: Location
-	public let title: String
-	public let address: String
+	public var location: Location
+	public var title: String
+	public var address: String
 
 	/* OPTIONAL. */
-	public let foursquareId: String?
+	public var foursquareId: String?
 
 	enum CodingKeys: String, CodingKey {
 		case location, title, address
@@ -303,11 +303,11 @@ public struct Venue: Codable {
 
 public struct File: Codable {
 
-	public let fileId: String
+	public var fileId: String
 
 	/* OPTIONAL. */
-	public let fileSize: Int?
-	public let filePath: String?
+	public var fileSize: Int?
+	public var filePath: String?
 
 	enum CodingKeys: String, CodingKey {
 		case fileSize = "file_size"
