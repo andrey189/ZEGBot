@@ -18,8 +18,9 @@ extension ZEGBot {
 	public func send(message text: String, to receiver: Sendable,
 	                 parseMode: ParseMode? = nil,
 	                 disableWebPagePreview: Bool? = nil,
-	                 disableNotification: Bool? = nil) -> Result<Message> {
-		let payload = SendingPayload(content: .message(text: text, parseMode: parseMode, disableWebPagePreview: disableWebPagePreview),
+	                 disableNotification: Bool? = nil,
+                     replyMarkup: ReplyKeyboardMarkup? = nil) -> Result<Message> {
+        let payload = SendingPayload(content: .message(text: text, parseMode: parseMode, disableWebPagePreview: disableWebPagePreview, replyMarkup: replyMarkup),
 		                             chatId: receiver.chatId,
 		                             replyToMessageId: receiver.replyToMessageId,
 		                             disableNotification: disableNotification)
