@@ -14,18 +14,18 @@ import Dispatch
 public typealias UpdateHandler = (Result<Update>, ZEGBot) -> Void
 
 public struct ZEGBot {
-
-	internal let session = URLSession(configuration: .default)
-
 	internal var urlPrefix: String
-
-	public init(token: String) {
+    internal var sesssionConfiguration:URLSessionConfiguration
+    
+    public init(token: String, sesssionConfiguration:URLSessionConfiguration = URLSessionConfiguration.default) {
 		self.urlPrefix = "https://api.telegram.org/bot"+token+"/"
+        self.sesssionConfiguration = sesssionConfiguration
 	}
 
 	public func run(withHandler handler: @escaping UpdateHandler) {
 		var offset = 0
 		let semaphore = DispatchSemaphore(value: 0)
+        let session = URLSession(configuration: self.sesssionConfiguration)
 		while true {
 			let task = session.dataTask(with: URL(string: urlPrefix + "getupdates?timeout=60&offset=\(offset)")!) { data, _, error in
 				guard let data = data else {

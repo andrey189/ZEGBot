@@ -168,7 +168,7 @@ extension ZEGBot {
 
 			// Perform the request.
 			var result: Result<Output>?
-			let task = URLSession(configuration: .default).dataTask(with: request) { data, _, error in
+			let task = URLSession(configuration: self.sesssionConfiguration).dataTask(with: request) { data, _, error in
 				if let data = data {
 					result = Result<Output>.decode(from: data)
 				} else {
