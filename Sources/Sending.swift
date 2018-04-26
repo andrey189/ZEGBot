@@ -25,7 +25,7 @@ struct SendingPayload: Encodable {
 
 	enum Content {
 		case serverStoredContent(ServerStoredContent)
-		case message(text: String, parseMode: ParseMode?, disableWebPagePreview: Bool?)
+        case message(text: String, parseMode: ParseMode?, disableWebPagePreview: Bool?, replyMarkup:ReplyKeyboardMarkup?)
 		case location(latitude: Double, longitude: Double)
 		case venue(latitude: Double, longitude: Double, title: String, address: String, foursquareId: String?)
 		case contact(phoneNumber: String, firstName: String, lastName: String?)
@@ -42,7 +42,8 @@ struct SendingPayload: Encodable {
 		case text
 		case parseMode = "parse_mode"
 		case disableWebPagePreview = "disable_web_page_preview"
-
+        case replyMarkup = "reply_markup"
+        
 		// forwardMessage
 		case fromChatId = "from_chat_id"
 		case messageId = "message_id"
@@ -101,12 +102,15 @@ struct SendingPayload: Encodable {
 				try container.encode(fileId, forKey: .voice)
 				if let caption = caption { try container.encode(caption, forKey: .caption) }
 			}
-		case .message(text: let text, parseMode: let parseMode, disableWebPagePreview: let disableWebPagePreview):
+        case .message(text: let text, parseMode: let parseMode, disableWebPagePreview: let disableWebPagePreview, replyMarkup: let replyMarkup):
 			try container.encode(text, forKey: .text)
 			if let parseMode = parseMode { try container.encode(parseMode, forKey: .parseMode) }
 			if let disableWebPagePreview = disableWebPagePreview {
 				try container.encode(disableWebPagePreview, forKey: .disableWebPagePreview)
 			}
+            if let replyMarkup = replyMarkup {
+                try container.encode(replyMarkup, forKey: .replyMarkup)
+            }
 		case .location(latitude: let latitude, longitude: let longitude):
 			try container.encode(latitude, forKey: .latitude)
 			try container.encode(longitude, forKey: .longitude)

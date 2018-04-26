@@ -332,3 +332,24 @@ public enum ChatAction: String, Codable {
 	case uploadDocument = "upload_document"
 	case findLocation = "find_location"
 }
+
+public struct ReplyKeyboardMarkup : Codable {
+    public init(keyboard:Array<Array<String>>,resizeKeyboard: Bool?,oneTimeKeyboard: Bool?,selective: Bool?) {
+        self.keyboard = keyboard
+        self.resizeKeyboard = resizeKeyboard
+        self.oneTimeKeyboard = oneTimeKeyboard
+        self.selective = selective
+    }
+    
+    public var keyboard: Array<Array<String>>
+    /* OPTIONAL. */
+    public var resizeKeyboard: Bool?
+    public var oneTimeKeyboard: Bool?
+    public var selective: Bool?
+    
+    enum CodingKeys: String, CodingKey {
+        case keyboard, selective
+        case resizeKeyboard = "resize_keyboard"
+        case oneTimeKeyboard = "one_time_keyboard"
+    }
+}
