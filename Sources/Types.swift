@@ -111,7 +111,7 @@ public struct Chat: Codable {
 
 public struct User: Codable {
 
-	public var id: Int
+	public var userid: Int
 	public var firstName: String
 
 	/* OPTIONAL. */
@@ -119,7 +119,8 @@ public struct User: Codable {
 	public var username: String?
 
 	enum CodingKeys: String, CodingKey {
-		case id, username
+		case username
+        case userid = "id"
 		case firstName = "first_name"
 		case lastName = "last_name"
 	}
