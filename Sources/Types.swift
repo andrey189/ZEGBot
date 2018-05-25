@@ -84,7 +84,7 @@ public class Message: Codable {
 		case pinnedMessage = "pinned_message"
 	}
     
-    func getText(for entity: MessageEntity) -> String? {
+    public func getText(for entity: MessageEntity) -> String? {
         guard let text = text else { return nil }
         
         let startIndex = text.index(text.startIndex, offsetBy: entity.offset)
