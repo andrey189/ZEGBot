@@ -83,7 +83,15 @@ public class Message: Codable {
 		case migrateFromChatId = "migrate_from_chat_id"
 		case pinnedMessage = "pinned_message"
 	}
-
+    
+    public func getText(for entity: MessageEntity) -> String? {
+        guard let text = text else { return nil }
+        
+        let startIndex = text.index(text.startIndex, offsetBy: entity.offset)
+        let endIndex = text.index(startIndex, offsetBy: entity.length - 1)
+        
+        return String(text[startIndex...endIndex])
+    }
 }
 
 public struct Chat: Codable {
@@ -138,11 +146,10 @@ public struct MessageEntity: Codable {
 
 	public enum StructType: String, Codable {
 		case mention, hashtag, url, email, bold, italic, code, pre
-		case botCommand = "bot_command"
+        case botCommand = "bot_command"
 		case textLink = "text_link"
 		case textMention = "text_mention"
 	}
-
 }
 
 public struct Audio: Codable {

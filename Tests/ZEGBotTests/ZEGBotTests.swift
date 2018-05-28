@@ -92,11 +92,14 @@ class ZEGBotTests: XCTestCase {
 		XCTAssert(message1.entities![2].url == nil)
 		XCTAssert(message1.entities![2].user == nil)
 
-		XCTAssert(message1.entities![3].offset == 37)
-		XCTAssert(message1.entities![3].length == 19)
-		XCTAssert(message1.entities![3].type == .email)
-		XCTAssert(message1.entities![3].url == nil)
-		XCTAssert(message1.entities![3].user == nil)
+        let emailEntity = message1.entities![3]
+        XCTAssert(emailEntity.offset == 37)
+        XCTAssert(emailEntity.length == 19)
+        XCTAssert(emailEntity.type == .email)
+        XCTAssert(emailEntity.url == nil)
+        XCTAssert(emailEntity.user == nil)
+        let emailText = message1.getText(for: emailEntity)
+        XCTAssert(emailText == "qizengtai@gmail.com", emailText!)
 
 		XCTAssert(message1.entities![4].offset == 57)
 		XCTAssert(message1.entities![4].length == 4)
@@ -127,6 +130,8 @@ class ZEGBotTests: XCTestCase {
 		XCTAssert(message1.entities![8].type == .textLink)
 		XCTAssert(message1.entities![8].url == "https://google.com/")
 		XCTAssert(message1.entities![8].user == nil)
+        
+    
 
 		let message2 = try! JSONDecoder().decode(Message.self, from: """
 		{
