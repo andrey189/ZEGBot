@@ -25,7 +25,7 @@ struct SendingPayload: Encodable {
 
 	enum Content {
 		case serverStoredContent(ServerStoredContent)
-        case message(text: String, parseMode: ParseMode?, disableWebPagePreview: Bool?, replyMarkup:ReplyKeyboardMarkup?)
+        case message(text: String, parseMode: ParseMode?, disableWebPagePreview: Bool?, replyMarkup:KeyboardMarkup?)
 		case location(latitude: Double, longitude: Double)
 		case venue(latitude: Double, longitude: Double, title: String, address: String, foursquareId: String?)
 		case contact(phoneNumber: String, firstName: String, lastName: String?)
@@ -109,7 +109,11 @@ struct SendingPayload: Encodable {
 				try container.encode(disableWebPagePreview, forKey: .disableWebPagePreview)
 			}
             if let replyMarkup = replyMarkup {
-                try container.encode(replyMarkup, forKey: .replyMarkup)
+                if replyMarkup is ReplyKeyboardMarkup{
+                    try container.encode(replyMarkup as! ReplyKeyboardMarkup, forKey: .replyMarkup)
+                }else if replyMarkup is InlineKeyboardMarkup{
+                    try container.encode(replyMarkup as! InlineKeyboardMarkup, forKey: .replyMarkup)
+                }
             }
 		case .location(latitude: let latitude, longitude: let longitude):
 			try container.encode(latitude, forKey: .latitude)

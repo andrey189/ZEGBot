@@ -16,14 +16,34 @@ public struct Update: Codable {
 	public var message: Message?
 	public var editedMessage: Message?
 	public var channelPost: Message?
+    public var callbackQuery: CallbackQuery?
 
 	enum CodingKeys: String, CodingKey {
 		case message
 		case updateId = "update_id"
 		case editedMessage = "edited_message"
 		case channelPost = "channel_post"
+        case callbackQuery = "callback_query"
 	}
+}
 
+public struct CallbackQuery: Codable {
+    public var id: String
+    public var from: User
+    public var chatInstance: String
+    
+    /* Optional. */
+    public var message: Message?
+    public var inlineMessageId: String?
+    public var data: String?
+    public var gameShortName: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id, from, message, data
+        case chatInstance = "chat_instance"
+        case inlineMessageId = "inline_message_id"
+        case gameShortName = "game_short_name"
+    }
 }
 
 public class Message: Codable {
@@ -111,7 +131,7 @@ public struct Chat: Codable {
 
 public struct User: Codable {
 
-	public var userid: Int
+	public var id: Int
 	public var firstName: String
 
 	/* OPTIONAL. */
@@ -119,8 +139,7 @@ public struct User: Codable {
 	public var username: String?
 
 	enum CodingKeys: String, CodingKey {
-		case username
-        case userid = "id"
+		case id, username
 		case firstName = "first_name"
 		case lastName = "last_name"
 	}
@@ -334,23 +353,63 @@ public enum ChatAction: String, Codable {
 	case findLocation = "find_location"
 }
 
-public struct ReplyKeyboardMarkup : Codable {
-    public init(keyboard:Array<Array<String>>,resizeKeyboard: Bool?,oneTimeKeyboard: Bool?,selective: Bool?) {
-        self.keyboard = keyboard
-        self.resizeKeyboard = resizeKeyboard
-        self.oneTimeKeyboard = oneTimeKeyboard
-        self.selective = selective
+public struct InlineKeyboardButton: Codable {
+    public var text: String
+    /* OPTIONAL. */
+    public var url: String?
+    public var callbackData:String?
+    public var switchInlineQuery:String?
+    public var switchInlineQueryCurrentChat:String?
+    public var pay:Bool?
+    
+    public init(text:String, callback: String) {
+        self.text = text
+        self.callbackData = callback
     }
     
+    public init(text:String, url: String) {
+        self.text = text
+        self.url = url
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case text, url, pay
+        case callbackData = "callback_data"
+        case switchInlineQuery = "switch_inline_query"
+        case switchInlineQueryCurrentChat = "switch_inline_query_current_chat"
+    }
+}
+
+public protocol KeyboardMarkup : Codable {
+    
+}
+
+public struct ReplyKeyboardMarkup : KeyboardMarkup {
     public var keyboard: Array<Array<String>>
     /* OPTIONAL. */
     public var resizeKeyboard: Bool?
     public var oneTimeKeyboard: Bool?
     public var selective: Bool?
     
+    public init(keyboard:Array<Array<String>>) {
+        self.keyboard = keyboard
+    }
+    
     enum CodingKeys: String, CodingKey {
         case keyboard, selective
         case resizeKeyboard = "resize_keyboard"
         case oneTimeKeyboard = "one_time_keyboard"
+    }
+}
+
+public struct InlineKeyboardMarkup : KeyboardMarkup {
+    public init(inlineKeyboard:Array<Array<InlineKeyboardButton>>) {
+        self.inlineKeyboard = inlineKeyboard
+    }
+    
+    public var inlineKeyboard: Array<Array<InlineKeyboardButton>>
+    
+    enum CodingKeys: String, CodingKey {
+        case inlineKeyboard = "inline_keyboard"
     }
 }

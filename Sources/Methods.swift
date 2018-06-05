@@ -19,7 +19,7 @@ extension ZEGBot {
 	                 parseMode: ParseMode? = nil,
 	                 disableWebPagePreview: Bool? = nil,
 	                 disableNotification: Bool? = nil,
-                     replyMarkup: ReplyKeyboardMarkup? = nil) -> Result<Message> {
+                     replyMarkup: KeyboardMarkup? = nil) -> Result<Message> {
         let payload = SendingPayload(content: .message(text: text, parseMode: parseMode, disableWebPagePreview: disableWebPagePreview, replyMarkup: replyMarkup),
 		                             chatId: receiver.chatId,
 		                             replyToMessageId: receiver.replyToMessageId,
@@ -169,8 +169,11 @@ extension ZEGBot {
 
 			// Perform the request.
 			var result: Result<Output>?
-			let task = URLSession(configuration: self.sesssionConfiguration).dataTask(with: request) { data, _, error in
+			let task = URLSession(configuration: self.sesssionConfiguration).dataTask(with: request) { data, responce, error in
 				if let data = data {
+                    if (responce as! HTTPURLResponse).statusCode != 200 {
+                        print("ERROR: " + String(data: data, encoding: .utf8)!)
+                    }
 					result = Result<Output>.decode(from: data)
 				} else {
 					result = .failure(error!)

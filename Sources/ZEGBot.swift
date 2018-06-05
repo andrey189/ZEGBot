@@ -33,9 +33,10 @@ public struct ZEGBot {
 					semaphore.signal()
 					return
 				}
+                //print("RESPONCE: " + String(data: data, encoding: .utf8)!)
 				switch Result<[Update]>.decode(from: data) {
 				case .success(let updates):
-                    if let lastUpdate = updates.last { offset = lastUpdate.updateId + 1 }
+                    if updates.count > 0, let lastUpdate = updates.last { offset = lastUpdate.updateId + 1 }
 					for update in updates {
 						handler(.success(update), self)
 					}
