@@ -395,6 +395,11 @@ public struct ReplyKeyboardMarkup : KeyboardMarkup {
         self.keyboard = keyboard
     }
     
+    public init(autoresized keyboard:Array<Array<String>>) {
+        self.keyboard = keyboard
+        self.resizeKeyboard = true
+    }
+    
     enum CodingKeys: String, CodingKey {
         case keyboard, selective
         case resizeKeyboard = "resize_keyboard"
