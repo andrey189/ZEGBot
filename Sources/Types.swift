@@ -340,6 +340,11 @@ public enum ChatAction: String, Codable {
 	case findLocation = "find_location"
 }
 
+public enum ReplyMarkup {
+    case replyKeyboardMarkup(ReplyKeyboardMarkup)
+    case replyKeyboardRemove(ReplyKeyboardRemove)
+}
+
 public struct ReplyKeyboardMarkup : Codable {
     public init(keyboard:Array<Array<String>>,resizeKeyboard: Bool?,oneTimeKeyboard: Bool?,selective: Bool?) {
         self.keyboard = keyboard
@@ -358,5 +363,16 @@ public struct ReplyKeyboardMarkup : Codable {
         case keyboard, selective
         case resizeKeyboard = "resize_keyboard"
         case oneTimeKeyboard = "one_time_keyboard"
+    }
+}
+
+public struct ReplyKeyboardRemove : Codable {
+    
+    public let removeKeyboard = true;
+    public var selective: Bool?
+    
+    enum CodingKeys: String, CodingKey{
+        case selective
+        case removeKeyboard = "remove_keyboard"
     }
 }

@@ -25,7 +25,13 @@ struct SendingPayload: Encodable {
 
 	enum Content {
 		case serverStoredContent(ServerStoredContent)
-        case message(text: String, parseMode: ParseMode?, disableWebPagePreview: Bool?, replyMarkup:ReplyKeyboardMarkup?)
+        
+        case message(
+            text: String,
+            parseMode: ParseMode?,
+            disableWebPagePreview: Bool?,
+            replyMarkup: ReplyMarkup?)
+        
 		case location(latitude: Double, longitude: Double)
 		case venue(latitude: Double, longitude: Double, title: String, address: String, foursquareId: String?)
 		case contact(phoneNumber: String, firstName: String, lastName: String?)
@@ -69,17 +75,23 @@ struct SendingPayload: Encodable {
 	}
 
 	func encode(to encoder: Encoder) throws {
+        
 		var container = encoder.container(keyedBy: CodingKeys.self)
+        
 		try container.encode(chatId, forKey: .chatId)
+        
 		if let replyToMessageId = replyToMessageId {
 			try container.encode(replyToMessageId, forKey: .replyToMessageId)
 		}
+        
 		if let disableNotification = disableNotification {
 			try container.encode(disableNotification, forKey: .disableNotification)
 		}
 
 		switch content {
+            
 		case .serverStoredContent(let serverStoredContent):
+            
 			switch serverStoredContent {
 			case .message(chatId: let chatId, messageId: let messageId):
 				try container.encode(chatId, forKey: .fromChatId)
@@ -102,15 +114,37 @@ struct SendingPayload: Encodable {
 				try container.encode(fileId, forKey: .voice)
 				if let caption = caption { try container.encode(caption, forKey: .caption) }
 			}
-        case .message(text: let text, parseMode: let parseMode, disableWebPagePreview: let disableWebPagePreview, replyMarkup: let replyMarkup):
+            
+        case .message(
+            text: let text,
+            parseMode: let parseMode,
+            disableWebPagePreview: let disableWebPagePreview,
+            replyMarkup: let replyMarkup):
+            
 			try container.encode(text, forKey: .text)
-			if let parseMode = parseMode { try container.encode(parseMode, forKey: .parseMode) }
+            
+			if let parseMode = parseMode {
+                try container.encode(parseMode, forKey: .parseMode)
+                
+            }
+            
 			if let disableWebPagePreview = disableWebPagePreview {
 				try container.encode(disableWebPagePreview, forKey: .disableWebPagePreview)
 			}
+            
             if let replyMarkup = replyMarkup {
-                try container.encode(replyMarkup, forKey: .replyMarkup)
+                
+                switch(replyMarkup) {
+                    
+                case .replyKeyboardMarkup(let replyKeyboardMarkup):
+                    try container.encode(replyKeyboardMarkup, forKey: .replyMarkup)
+                    
+                case.replyKeyboardRemove(let replyKeyboardRemove):
+                    try container.encode(replyKeyboardRemove, forKey: .replyMarkup)
+                    
+                }
             }
+            
 		case .location(latitude: let latitude, longitude: let longitude):
 			try container.encode(latitude, forKey: .latitude)
 			try container.encode(longitude, forKey: .longitude)
