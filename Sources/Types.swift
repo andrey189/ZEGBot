@@ -368,6 +368,10 @@ public struct ReplyKeyboardMarkup : Codable {
 
 public struct ReplyKeyboardRemove : Codable {
     
+    public init(selective: Bool? = nil){
+        self.selective = selective
+    }
+    
     public let removeKeyboard = true;
     public var selective: Bool?
     
