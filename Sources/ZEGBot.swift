@@ -22,6 +22,10 @@ public struct ZEGBot {
 	public init(token: String) {
 		self.urlPrefix = "https://api.telegram.org/bot"+token+"/"
 	}
+    
+    public func WillStartPolling(with url: URL) {
+    
+    }
 
 	public func run(withHandler handler: @escaping UpdateHandler) {
 		var offset = 0
@@ -29,6 +33,8 @@ public struct ZEGBot {
 		while true {
             
             let queryUrl = URL(string: urlPrefix + "getupdates?timeout=60&offset=\(offset)")
+            
+            WillStartPolling(with: queryUrl!)
             
             let task = session.dataTask(with: queryUrl!) {
                 data, _, error in
