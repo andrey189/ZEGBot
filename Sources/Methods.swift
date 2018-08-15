@@ -96,12 +96,12 @@ extension ZEGBot {
                      fileName: String,
                        caption: String? = nil,
                        to receiver: Sendable,
-                       disableNotification: Bool? = nil) -> Result<Message> {
+                       disableNotification: Bool? = nil) throws -> Result<Message> {
         let payload = SendingPayload(content: .serverStoredContent(.document(fileId: fileName, caption: caption)),
                                      chatId: receiver.chatId,
                                      replyToMessageId: receiver.replyToMessageId,
                                      disableNotification: disableNotification)
-        return performUploadFileRequest(ofMethod: "sendDocument", payload: payload, fileUrl: fileUrl)
+        return try performUploadFileRequest(ofMethod: "sendDocument", payload: payload, fileUrl: fileUrl)
     }
 
 
@@ -185,7 +185,7 @@ extension ZEGBot {
     
     private func performUploadFileRequest<Input, Output>(ofMethod method: String,
                                                          payload: Input,
-                                                         fileUrl: URL) -> Result<Output>
+                                                         fileUrl: URL) throws -> Result<Output>
         where Input: Encodable, Output: Decodable {
             
             let semaphore = DispatchSemaphore(value: 0)
@@ -203,8 +203,9 @@ extension ZEGBot {
             // Perform the request.
             var result: Result<Output>?
             let urlSession: URLSession = URLSession(configuration: .default)
+            let fileData = try Data(contentsOf: fileUrl)
             
-            let task = urlSession.uploadTask(with: request, fromFile: fileUrl)
+            let task = urlSession.uploadTask(with: request, from: fileData)
             { data, _, error in
                 if let data = data {
                     result = Result<Output>.decode(from: data)
