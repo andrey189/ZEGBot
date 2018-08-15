@@ -175,6 +175,19 @@ public struct Audio: Codable {
 
 public struct Document: Codable {
 
+    public init(fileId: String,
+                thumb: PhotoSize? = nil,
+                fileName: String? = nil,
+                mimeType: String? = nil,
+                fileSize: Int? = nil)
+    {
+        self.fileId = fileId
+        self.thumb = thumb
+        self.fileName = fileName
+        self.mimeType = mimeType
+        self.fileSize = fileSize
+    }
+    
 	public let fileId: String
 
 	/* OPTIONAL. */
