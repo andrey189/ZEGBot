@@ -90,20 +90,6 @@ extension ZEGBot {
 		                             disableNotification: disableNotification)
 		return performRequest(ofMethod: "sendDocument", payload: payload)
 	}
-    
-    @discardableResult
-    public func send(fileUrl: URL,
-                     fileName: String,
-                       caption: String? = nil,
-                       to receiver: Sendable,
-                       disableNotification: Bool? = nil) throws -> Result<Message> {
-        let payload = SendingPayload(content: .serverStoredContent(.document(fileId: fileName, caption: caption)),
-                                     chatId: receiver.chatId,
-                                     replyToMessageId: receiver.replyToMessageId,
-                                     disableNotification: disableNotification)
-        return try performUploadFileRequest(ofMethod: "sendDocument", payload: payload, fileUrl: fileUrl)
-    }
-
 
 	@discardableResult
 	public func send(_ video: Video, caption: String? = nil, to receiver: Sendable,
@@ -183,46 +169,6 @@ extension ZEGBot {
         
     }
     
-    private func performUploadFileRequest<Input, Output>(ofMethod method: String,
-                                                         payload: Input,
-                                                         fileUrl: URL) throws -> Result<Output>
-        where Input: Encodable, Output: Decodable {
-            
-            let semaphore = DispatchSemaphore(value: 0)
-            
-            // Preparing the request.
-            let bodyData = (try? JSONEncoder().encode(payload))!
-            var request = URLRequest(url: URL(string: urlPrefix + method)!)
-            
-            request.httpMethod = "POST"
-            request.httpBody = bodyData
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            willSendRequest(request)
-            
-            // Perform the request.
-            var result: Result<Output>?
-            let urlSession: URLSession = URLSession(configuration: .default)
-            let fileData = try Data(contentsOf: fileUrl)
-            
-            let task = urlSession.uploadTask(with: request, from: fileData)
-            { data, _, error in
-                if let data = data {
-                    result = Result<Output>.decode(from: data)
-                } else {
-                    result = .failure(error!)
-                }
-                semaphore.signal()
-            }
-            
-            task.resume()
-            semaphore.wait()
-            
-            didSendRequest(request)
-            
-            return result!
-    }
-    
 	private func performRequest<Input, Output>(ofMethod method: String, payload: Input) -> Result<Output>
 		where Input: Encodable, Output: Decodable {
 			// Preparing the request.
@@ -239,6 +185,7 @@ extension ZEGBot {
 			// Perform the request.
 			var result: Result<Output>?
             let urlSession: URLSession = URLSession(configuration: .default)
+            
             
             let task = urlSession.dataTask(with: request) { data, _, error in
 				if let data = data {
