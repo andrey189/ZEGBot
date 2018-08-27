@@ -15,12 +15,16 @@ public typealias UpdateHandler = (Result<Update>, ZEGBot) -> Void
 
 public struct ZEGBot {
 
-	internal let session = URLSession(configuration: .default)
+    internal let urlSessionConfiguration: URLSessionConfiguration
+    
+    internal let session: URLSession
 
-	internal var urlPrefix: String
+	public let urlPrefix: String
 
-	public init(token: String) {
+    public init(token: String, urlSessionConfiguration: URLSessionConfiguration) {
 		self.urlPrefix = "https://api.telegram.org/bot"+token+"/"
+        session = URLSession(configuration: urlSessionConfiguration)
+        self.urlSessionConfiguration = urlSessionConfiguration
 	}
     
     public func WillStartPolling(with url: URL) {

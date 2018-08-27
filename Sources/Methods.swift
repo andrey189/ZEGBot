@@ -164,7 +164,7 @@ extension ZEGBot {
     
     }
     
-    public func didSendRequest(_ request: URLRequest)
+    public func didReceiveResponse(_ data: Data?, _ urlResponse: URLResponse?)
     {
         
     }
@@ -184,10 +184,12 @@ extension ZEGBot {
             
 			// Perform the request.
 			var result: Result<Output>?
-            let urlSession: URLSession = URLSession(configuration: .default)
+            let urlSession: URLSession = URLSession(configuration: urlSessionConfiguration)
             
-            
-            let task = urlSession.dataTask(with: request) { data, _, error in
+            let task = urlSession.dataTask(with: request) { data, response, error in
+                
+                self.didReceiveResponse(data, response)
+                
 				if let data = data {
 					result = Result<Output>.decode(from: data)
 				} else {
@@ -198,8 +200,6 @@ extension ZEGBot {
             
 			task.resume()
 			semaphore.wait()
-            
-            didSendRequest(request)
             
 			return result!
 	}
