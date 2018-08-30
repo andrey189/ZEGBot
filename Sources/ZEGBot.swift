@@ -20,11 +20,16 @@ public struct ZEGBot {
     internal let session: URLSession
 
 	public let urlPrefix: String
+    
+    public let token: String
 
-    public init(token: String, urlSessionConfiguration: URLSessionConfiguration) {
+    public init(token: String,
+                urlSessionConfiguration: URLSessionConfiguration) {
+        
 		self.urlPrefix = "https://api.telegram.org/bot"+token+"/"
         session = URLSession(configuration: urlSessionConfiguration)
         self.urlSessionConfiguration = urlSessionConfiguration
+        self.token = token
 	}
     
     public func WillStartPolling(with url: URL) {
