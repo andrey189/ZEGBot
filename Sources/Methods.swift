@@ -184,7 +184,7 @@ extension ZEGBot {
             
 			// Perform the request.
 			var result: Result<Output>?
-            let urlSession: URLSession = URLSession(configuration: urlSessionConfiguration)
+            let urlSession: URLSession = URLSession()
             
             let task = urlSession.dataTask(with: request) { data, response, error in
                 

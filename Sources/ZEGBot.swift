@@ -14,8 +14,6 @@ import Dispatch
 public typealias UpdateHandler = (Result<Update>, ZEGBot) -> Void
 
 public struct ZEGBot {
-
-    internal let urlSessionConfiguration: URLSessionConfiguration
     
     internal let session: URLSession
 
@@ -28,7 +26,6 @@ public struct ZEGBot {
         
 		self.urlPrefix = "https://api.telegram.org/bot"+token+"/"
         session = URLSession(configuration: urlSessionConfiguration)
-        self.urlSessionConfiguration = urlSessionConfiguration
         self.token = token
 	}
     
