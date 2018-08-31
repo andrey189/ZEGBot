@@ -21,11 +21,10 @@ public struct ZEGBot {
     
     public let token: String
 
-    public init(token: String,
-                urlSessionConfiguration: URLSessionConfiguration) {
+    public init(token: String) {
         
 		self.urlPrefix = "https://api.telegram.org/bot"+token+"/"
-        session = URLSession(configuration: urlSessionConfiguration)
+        session = URLSession()
         self.token = token
 	}
     

@@ -8,7 +8,7 @@
 import ZEGBot
 import Foundation
 
-let bot = ZEGBot(token: "TYPE YOUR TOKEN HERE", urlSessionConfiguration: .default)
+let bot = ZEGBot(token: "TYPE YOUR TOKEN HERE")
 
 bot.run { updateResult, bot in
 	switch updateResult {
