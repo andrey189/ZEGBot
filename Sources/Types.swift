@@ -105,7 +105,7 @@ public struct Chat: Codable {
 	public let firstName: String?
 	public let lastName: String?
     
-    init(id: Int,
+    public init(id: Int,
               type: StructType,
               title: String? = nil,
               username: String? = nil,
