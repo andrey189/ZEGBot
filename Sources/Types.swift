@@ -104,6 +104,20 @@ public struct Chat: Codable {
 	public let username: String?
 	public let firstName: String?
 	public let lastName: String?
+    
+    init(id: Int,
+              type: StructType,
+              title: String? = nil,
+              username: String? = nil,
+              firstName: String? = nil,
+              lastName: String? = nil) {
+        self.id = id
+        self.type = type
+        self.title = title
+        self.username = username
+        self.firstName = firstName
+        self.lastName = lastName
+    }
 
 	public enum StructType: String, Codable {
 		case `private`, group, supergroup, channel
